@@ -14,6 +14,7 @@ import logging, sys
 
 from google_image_search_service import GoogleImageSearchService
 from image_download_service import ImageDownloadService
+from metadata_store_service import MetadataFileStorageService
 
 
 def initialize_argument_parser():
@@ -67,9 +68,11 @@ def main():
         os.makedirs(dir_name)
 
     download_service = ImageDownloadService(dir_name)
+    storage_service = MetadataFileStorageService(dir_name)
     for item in result:
         url = item['link']
         download_service.call(url)
+        storage_service.call(url, item)
 
 
 if __name__ == '__main__':
