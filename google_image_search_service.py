@@ -1,4 +1,9 @@
+import logging
+import json
+
 from googleapiclient.discovery import build
+
+logger = logging.getLogger(__name__)
 
 
 class GoogleImageSearchService:
@@ -18,8 +23,8 @@ class GoogleImageSearchService:
 
         Returns
         -------
-        Dictionary
-            Returns search results as a Dictionary
+        Array
+            Returns search results as an Array
 
         """
         self.api_key = api_key
@@ -31,7 +36,7 @@ class GoogleImageSearchService:
             page_count += 1
         return page_count
 
-    def image_search(self, term, count=10, search_fields=DEFAULT_SEARCH_FIELDS):
+    def call(self, term, count=10, search_fields=DEFAULT_SEARCH_FIELDS):
         """
         Image search by give term.
 
@@ -53,7 +58,7 @@ class GoogleImageSearchService:
         items = []
         start_index = 1
         for page in range(0, self._calculate_page_count(count)):
-            print 'Downloading search terms, page %d' % page
+            logger.info('Downloading search terms, page %d', page)
             response = service.cse().list(
                 q=term,
                 cx=self.engine_id,
@@ -61,7 +66,8 @@ class GoogleImageSearchService:
                 fields=search_fields,
                 start=start_index
             ).execute()
+            logging.debug(json.dumps(response, indent=4, sort_keys=True))
             items += response['items']
             start_index = response['queries']['nextPage'][0]['startIndex']
 
-        return items
+        return items[:count]
