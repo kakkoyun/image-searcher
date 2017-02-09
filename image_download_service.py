@@ -28,8 +28,14 @@ class ImageDownloadService:
         file_path = os_path.join(self.dir_path, file_name)
 
         # Download the file if it does not exist.
-        if not os_path.isfile(file_path):
-            logger.info('Downloading, %s ' % file_path)
-            urlretrieve(url, file_path)
-        else:
-            logger.info('File already exists, %s' % file_path)
+        try:
+            if not os_path.isfile(file_path):
+                logger.info('Downloading, %s ' % file_path)
+                urlretrieve(url, file_path)
+                return True
+            else:
+                logger.info('File already exists, %s' % file_path)
+        except StandardError, e:
+            logger.error('Error while donwloading file, %s' % file_path)
+
+        return False
