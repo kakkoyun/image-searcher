@@ -11,6 +11,7 @@ import sys
 import json
 import argparse
 import logging
+import coloredlogs
 import re
 
 from google_image_search_service import GoogleImageSearchService
@@ -41,6 +42,7 @@ def _initialize_logger(debug=False):
         logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
     else:
         logging.basicConfig(stream=sys.stderr, level=logging.INFO)
+    coloredlogs.install()
 
 
 def _sanitize_search_term(term):
@@ -59,8 +61,7 @@ def search_and_download_term(term, count, api_key, engine_id):
     storage_service = MetadataFileStorageService(dir_name)
     for item in result:
         url = item['link']
-        download_service.call(url)
-        storage_service.call(url, item)
+        download_service.call(url) and storage_service.call(url, item)
 
 
 def main():
