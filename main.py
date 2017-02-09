@@ -16,7 +16,7 @@ import re
 
 from google_image_search_service import GoogleImageSearchService
 from image_download_service import ImageDownloadService
-from metadata_store_service import MetadataFileStorageService
+from metadata_file_storage_service import MetadataFileStorageService
 
 
 def _initialize_argument_parser():
