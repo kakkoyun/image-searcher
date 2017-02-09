@@ -9,22 +9,17 @@ __author__ = 'kakkoyun@gmail.com (Kemal Akkoyun)'
 import os
 import pprint
 
-from googleapiclient.discovery import build
+from google_image_search_service import GoogleImageSearchService
 
 
 def main():
-    API_KEY = os.environ["GOOGLE_API_KEY"]
-    ENGINE_ID = os.environ["GOOGLE_SEARCH_ENGINE_ID"]
+    API_KEY = os.environ['GOOGLE_API_KEY']
+    ENGINE_ID = os.environ['GOOGLE_SEARCH_ENGINE_ID']
 
-    service = build('customsearch', 'v1', developerKey=API_KEY)
+    service = GoogleImageSearchService(API_KEY, ENGINE_ID)
+    result = service.image_search('arnolfini paradoy')
 
-    res = service.cse().list(
-        q='paradoy',
-        cx=ENGINE_ID,
-    ).execute()
-
-    pprint.pprint(res)
-
+    pprint.pprint(result)
 
 if __name__ == '__main__':
     main()
