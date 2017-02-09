@@ -13,8 +13,8 @@ python --version
 
 ```
 
-**API_KEY**: Create Custom Search Engine and Generate API keys from [Google Developer Console](https://console.developers.google.com/apis/api/customsearch.googleapis.com/overview)
-**ENGINE_ID**: Obtain your engine id [Google Custom Search Engine Console](https://cse.google.com/cse/all)
+* **API_KEY**: Create Custom Search Engine and Generate API keys from [Google Developer Console](https://console.developers.google.com/apis/api/customsearch.googleapis.com/overview)
+* **ENGINE_ID**: Obtain your engine id [Google Custom Search Engine Console](https://cse.google.com/cse/all)
 
 ### Installing
 
