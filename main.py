@@ -7,7 +7,8 @@ Command-line application that does a search and download.
 __author__ = 'kakkoyun@gmail.com (Kemal Akkoyun)'
 
 import os
-import pprint
+import json
+import argparse
 
 from google_image_search_service import GoogleImageSearchService
 
@@ -19,7 +20,7 @@ def main():
     service = GoogleImageSearchService(API_KEY, ENGINE_ID)
     result = service.image_search('arnolfini paradoy')
 
-    pprint.pprint(result)
+    print json.dumps(result, indent=4, sort_keys=True)
 
 if __name__ == '__main__':
     main()
