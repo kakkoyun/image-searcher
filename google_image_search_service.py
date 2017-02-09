@@ -3,6 +3,7 @@ from googleapiclient.discovery import build
 
 class GoogleImageSearchService:
     DEFAULT_SEARCH_FIELDS = 'items(fileFormat,image(byteSize,height,width),labels,link,mime,snippet,title),queries,searchInformation(searchTime,totalResults)'
+    DEFAULT_PAGE_SIZE = 10
 
     def __init__(self, api_key, engine_id):
         """
@@ -24,7 +25,13 @@ class GoogleImageSearchService:
         self.api_key = api_key
         self.engine_id = engine_id
 
-    def image_search(self, term, search_fields=DEFAULT_SEARCH_FIELDS):
+    def _calculate_page_count(self, count):
+        page_count = count / self.DEFAULT_PAGE_SIZE
+        if count % self.DEFAULT_PAGE_SIZE:
+            page_count += 1
+        return page_count
+
+    def image_search(self, term, count=10, search_fields=DEFAULT_SEARCH_FIELDS):
         """
         Image search by give term.
 
@@ -42,9 +49,19 @@ class GoogleImageSearchService:
 
         """
         service = build('customsearch', 'v1', developerKey=self.api_key)
-        return service.cse().list(
-            q=term,
-            cx=self.engine_id,
-            searchType='image',
-            fields=search_fields
-        ).execute()
+
+        items = []
+        start_index = 1
+        for page in range(0, self._calculate_page_count(count)):
+            print 'Downloading search terms, page %d' % page
+            response = service.cse().list(
+                q=term,
+                cx=self.engine_id,
+                searchType='image',
+                fields=search_fields,
+                start=start_index
+            ).execute()
+            items += response['items']
+            start_index = response['queries']['nextPage'][0]['startIndex']
+
+        return items
