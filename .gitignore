@@ -90,3 +90,9 @@ ENV/
 
 # PyCharm
 .idea/
+
+# Data
+data/
+
+# System
+.DS_Store

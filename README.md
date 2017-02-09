@@ -13,8 +13,8 @@ python --version
 
 ```
 
-Create Custom Search Engine and Generate API keys from [Google Developer Console](https://console.developers.google.com/apis/api/customsearch.googleapis.com/overview)
-Obtain your engine key [Google Custom Search Engine Console](https://cse.google.com/cse/all)
+* **API_KEY**: Create Custom Search Engine and Generate API keys from [Google Developer Console](https://console.developers.google.com/apis/api/customsearch.googleapis.com/overview)
+* **ENGINE_ID**: Obtain your engine id [Google Custom Search Engine Console](https://cse.google.com/cse/all)
 
 ### Installing
 
@@ -26,9 +26,11 @@ pip install -r requirements.txt
 
 ## Usage
 
-* API_KEY: Google API KEY
-* CX: Search Engine ID
-TODO
+To see how to use:
+
+```
+python main.py -h
+```
 
 ## Built With
 
